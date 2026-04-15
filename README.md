@@ -5,6 +5,7 @@
 
 ## 📋 Table of Contents
 1. [Core Concept (Crucial)](#-core-concept-if-you-dont-get-this--stop)
+2. [How to Use MiniGit (Current Implementation)](#-how-to-use-minigit-current-implementation)
 2. [Mandatory Features](#-what-you-must-build)
 3. [Required Architecture](#-required-architecture)
 4. [Critical Engineering Points](#-critical-engineering-points)
@@ -27,6 +28,69 @@ Git is **NOT**:
 Git **IS**:
 * A **Content-Addressable File System**.
 * A system where *everything* (files, directories, commits) is identified by a **Cryptographic Hash** of its contents.
+
+---
+
+## 🚀 How to Use MiniGit (Current Implementation)
+
+### Prerequisites
+- Java 17+
+- Maven 3.9+
+
+### Build
+```bash
+mvn -DskipTests compile
+```
+
+### Run commands
+Use the app entrypoint and pass MiniGit commands as arguments:
+
+```bash
+java -cp target/classes com.java.minigit.App <command> [args]
+```
+
+Examples:
+```bash
+java -cp target/classes com.java.minigit.App init
+java -cp target/classes com.java.minigit.App add README.md
+java -cp target/classes com.java.minigit.App commit -m "first commit"
+java -cp target/classes com.java.minigit.App log
+java -cp target/classes com.java.minigit.App status
+```
+
+### Available commands
+- `init`
+- `add <file...>`
+- `commit -m <message>`
+- `log`
+- `checkout <commit_hash|branch>`
+- `status`
+- `branch [name]`
+- `switch <branch>`
+- `switch -c <new_branch>`
+
+### Typical workflow
+```bash
+# 1) initialize repository
+java -cp target/classes com.java.minigit.App init
+
+# 2) stage and commit
+java -cp target/classes com.java.minigit.App add file.txt
+java -cp target/classes com.java.minigit.App commit -m "add file"
+
+# 3) inspect history and state
+java -cp target/classes com.java.minigit.App log
+java -cp target/classes com.java.minigit.App status
+
+# 4) branch and switch
+java -cp target/classes com.java.minigit.App branch feature/demo
+java -cp target/classes com.java.minigit.App switch feature/demo
+```
+
+### Notes
+- `checkout` supports abbreviated commit hashes when unambiguous.
+- `checkout <branch>` reattaches `HEAD` to that branch.
+- `checkout <hash>` puts you in detached `HEAD` mode.
 
 ---
 
