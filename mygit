@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+JAR_PATH="$PROJECT_DIR/target/minigit-1.0-SNAPSHOT.jar"
+
+if [[ ! -f "$JAR_PATH" ]]; then
+  echo "mygit: build artifact not found at $JAR_PATH" >&2
+  echo "mygit: run 'mvn -DskipTests package' in $PROJECT_DIR" >&2
+  exit 1
+fi
+
+exec java -jar "$JAR_PATH" "$@"

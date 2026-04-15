@@ -39,7 +39,7 @@ Git **IS**:
 
 ### Build
 ```bash
-mvn -DskipTests compile
+mvn -DskipTests package
 ```
 
 ### Run commands
@@ -49,6 +49,12 @@ Use the app entrypoint and pass MiniGit commands as arguments:
 java -cp target/classes com.java.minigit.App <command> [args]
 ```
 
+Or use the launcher script (recommended):
+
+```bash
+./mygit <command> [args]
+```
+
 Examples:
 ```bash
 java -cp target/classes com.java.minigit.App init
@@ -56,6 +62,43 @@ java -cp target/classes com.java.minigit.App add README.md
 java -cp target/classes com.java.minigit.App commit -m "first commit"
 java -cp target/classes com.java.minigit.App log
 java -cp target/classes com.java.minigit.App status
+
+./mygit init
+./mygit add README.md
+./mygit commit -m "first commit"
+./mygit log
+./mygit status
+```
+
+### Use `mygit` directly from Minishell
+
+If your Minishell project is at your local machine, do this once:
+
+```bash
+# 1) Build MiniGit jar
+cd /path/to/project/minigit
+mvn -DskipTests package
+
+# 2) Install launcher into PATH
+mkdir -p ~/.local/bin
+ln -sf /home/path/to/project/minigit/mygit ~/.local/bin/mygit
+
+# 3) Ensure PATH includes ~/.local/bin
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc # ~/.bashrc
+source ~/.zshrc # ~/.bashrc
+```
+
+Then start minishell from that same terminal and run:
+
+```bash
+mygit init
+mygit status
+```
+
+If minishell restricted mode is enabled, allow it first:
+
+```bash
+restrict allow mygit
 ```
 
 ### Available commands
